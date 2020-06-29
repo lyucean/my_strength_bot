@@ -18,7 +18,8 @@
     "ext-mbstring": "*",
     "airbrake/phpbrake": "^0.7.3",
     "lyucean/telegram_bot_php": "dev-forked",
-    "ext-iconv": "*"
+    "ext-iconv": "*",
+    "robmorgan/phinx": "^0.12.3"
   },
   "autoload": {
     "psr-4": {
