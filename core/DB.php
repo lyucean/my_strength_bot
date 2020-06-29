@@ -198,7 +198,7 @@ class DB
                 'text' => $this->db->escape($data['text']),
                 'image' => $data['image'] ?? '',
                 'message_id' => $data['message_id'],
-                'rating' => 0,
+                'view' => 0,
                 'date_added' => $this->db->now(),
                 'date_reminder' => $this->db->now(),
                 'display' => 1,
@@ -207,7 +207,7 @@ class DB
     }
 
     /**
-     * update date reminder and rating for Content
+     * update date reminder and view for Content
      * @param $content_id
      * @throws Exception
      */
@@ -218,7 +218,7 @@ class DB
             'content',
             [
                 'date_reminder' => $this->db->now(),
-                'rating' => $this->db->inc()
+                'view' => $this->db->inc()
             ]
         );
     }
