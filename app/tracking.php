@@ -1,19 +1,19 @@
 <?php
 
-//if (OC_ENV_PROD) {
-//    $notifier = new Airbrake\Notifier(
-//        array(
-//            'projectId' => AIR_BRAKE_PROJECT_ID,
-//            "environment" => ENVIRONMENT,
-//            'projectKey' => AIR_BRAKE_PROJECT_KEY
-//        )
-//    );
-//
-//    Airbrake\Instance::set($notifier);
-//
-//    $handler = new Airbrake\ErrorHandler($notifier);
-//    $handler->register();
-//}
+if (OC_ENV_PROD) {
+    $notifier = new Airbrake\Notifier(
+        array(
+            'projectId' => AIR_BRAKE_PROJECT_ID,
+            "environment" => NAME_PROJECT,
+            'projectKey' => AIR_BRAKE_PROJECT_KEY
+        )
+    );
+
+    Airbrake\Instance::set($notifier);
+
+    $handler = new Airbrake\ErrorHandler($notifier);
+    $handler->register();
+}
 
 //try {
 //    throw new Exception('Test');
