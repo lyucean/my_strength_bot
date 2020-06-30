@@ -11,46 +11,39 @@ class Schedule extends Model
 
     /**
      * Checking to see if it's time for an alert, if it is, it sends it out
+     * @throws Exception
      */
     public function check()
     {
         foreach ($this->db->getSendingDailyNow() as $item) {
-            $content = $this->db->getContentPrepared($item['chat_id']);
+            $message = $this->db->getMessagePrepared($item['chat_id']);
 
-            if (empty($content)) {
+            if (empty($message)) {
                 continue;
             }
 
-            $message = $content['text'] . ' №' . $content['content_id'];
+            $answer = $message['text'] . ' №' . $message['message_id'];
 
-            if (!empty($content['image'])) {
-                $img = curl_file_create(DIR_FILE . $content['image'], 'image/jpeg');
+            // if this is image
+            if (!empty($message['image'])) {
+                $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');
                 $this->telegram->sendPhoto(
                     [
                         'chat_id' => $item['chat_id'],
                         'photo' => $img,
-                        'caption' => $message
+                        'caption' => $answer
                     ]
                 );
                 return;
             }
 
-            $content = [
-                'chat_id' => $item['chat_id'],
-//                'reply_markup' => $this->telegram->buildInlineKeyBoard(
-//                    [
-//                        [
-//                            $this->telegram->buildInlineKeyBoardButton(
-//                                'Delete this',
-//                                $url = '',
-//                                '/content/cancel?content_id=' . $content['content_id']
-//                            ),
-//                        ],
-//                    ]
-//                ),
-                'text' => $message
-            ];
-            $this->telegram->sendMessage($content);
+            // default is text
+            $this->telegram->sendMessage(
+                [
+                    'chat_id' => $item['chat_id'],
+                    'text' => $answer
+                ]
+            );
 
             $this->db->setScheduleDailyStatusSent($item['schedule_daily_id']);
         }

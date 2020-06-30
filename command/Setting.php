@@ -60,12 +60,13 @@ class Setting
             ],
         ];
 
-        $content = [
-            'chat_id' => $this->chat_id,
-            'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-            'text' => 'Choose to change'
-        ];
-        $this->telegram->sendMessage($content);
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
+                'text' => 'Choose to change'
+            ]
+        );
     }
 
     public function change_number()
@@ -220,12 +221,13 @@ class Setting
             ],
         ];
 
-        $content = [
-            'chat_id' => $this->chat_id,
-            'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-            'text' => 'Choose to change'
-        ];
-        $this->telegram->sendMessage($content);
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
+                'text' => 'Choose to change'
+            ]
+        );
     }
 
     public function clear_list()
@@ -255,7 +257,7 @@ class Setting
             return;
         }
 
-        $this->db->clearAllContent($this->chat_id);
+        $this->db->clearAllMessage($this->chat_id);
 
         $this->telegram->sendMessage(
             [

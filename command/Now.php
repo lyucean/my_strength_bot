@@ -27,9 +27,9 @@ class Now
 
     public function index()
     {
-        $content = $this->db->getContentPrepared($this->chat_id);
+        $message = $this->db->getMessagePrepared($this->chat_id);
 
-        if (empty($content)) { // If there is nothing to send
+        if (empty($message)) { // If there is nothing to send
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
@@ -38,18 +38,18 @@ class Now
             );
             return;
         }
-        $this->send($content);
+        $this->send($message);
     }
 
-    public function get($content_id)
+    public function get($message_id)
     {
-        if (empty($content_id)) {
+        if (empty($message_id)) {
             (new Error($this->telegram))->send('I did not find message.');
         }
 
-        $content = $this->db->getContent($content_id);
+        $message = $this->db->getMessage($message_id);
 
-        if (empty($content)) { // If there is nothing to send
+        if (empty($message)) { // If there is nothing to send
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
@@ -58,20 +58,20 @@ class Now
             );
             return;
         }
-        $this->send($content);
+        $this->send($message);
     }
 
-    protected function send($content)
+    protected function send($message)
     {
-        $message = $content['text'] . ' №' . $content['content_id'];
+        $answer = $message['text'] . ' №' . $message['message_id'];
 
-        if (!empty($content['image'])) {
-            $img = curl_file_create(DIR_FILE . $content['image'], 'image/jpeg');
+        if (!empty($message['image'])) {
+            $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');
             $this->telegram->sendPhoto(
                 [
                     'chat_id' => $this->chat_id,
                     'photo' => $img,
-                    'caption' => $message
+                    'caption' => $answer
                 ]
             );
             return;
@@ -80,19 +80,7 @@ class Now
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-
-//                'reply_markup' => $this->telegram->buildInlineKeyBoard(
-//                    [
-//                        [
-//                            $this->telegram->buildInlineKeyBoardButton(
-//                                'Delete this',
-//                                $url = '',
-//                                '/content/cancel?content_id=' . $content['content_id']
-//                            ),
-//                        ],
-//                    ]
-//                ),
-                'text' => $message
+                'text' => $answer
             ]
         );
     }

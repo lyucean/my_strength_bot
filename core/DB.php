@@ -91,29 +91,29 @@ class DB
         return $this->db->replace('schedule', $data);
     }
 
-    // Content ----------------------------------------------------
+    // Message ----------------------------------------------------
 
     /**
-     * Selects which content to send.
+     * Selects which message to send.
      * @param $chat_id
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function getContentPrepared($chat_id)
+    public function getMessagePrepared($chat_id)
     {
         $this->db->where("chat_id", $chat_id);
         $this->db->where("display", 1);
         $this->db->orderBy("date_reminder", "asc");
-        $content = $this->db->getOne("content");
+        $message = $this->db->getOne("message");
 
-        if (empty($content)) {
+        if (empty($message)) {
             return [];
         }
 
-        // Add the information that we have already shown this content
-        $this->addDateReminderContent($content['content_id']);
+        // Add the information that we have already shown this message
+        $this->addDateReminderMessage($message['message_id']);
 
-        return $content;
+        return $message;
     }
 
     /**
@@ -121,12 +121,12 @@ class DB
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function checkDoubleContent($data)
+    public function checkDoubleMessage($data)
     {
         $this->db->where("text", $this->db->escape($data['text']));
         $this->db->where("chat_id", $data['chat_id']);
         $this->db->where("display", 1);
-        return !empty($this->db->get("content"));
+        return !empty($this->db->get("message"));
     }
 
     /**
@@ -134,25 +134,25 @@ class DB
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function getContents($chat_id)
+    public function getMessages($chat_id)
     {
         $this->db->where("chat_id", $chat_id);
         $this->db->where("display", 1);
         $this->db->orderBy("date_reminder", "desc");
-        return $this->db->get("content");
+        return $this->db->get("message");
     }
 
     /**
-     * @param $content_id
+     * @param $message_id
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function getContent($content_id)
+    public function getMessage($message_id)
     {
-        $this->db->where("content_id", (int)$content_id);
+        $this->db->where("message_id", (int)$message_id);
         $this->db->where("display", 1);
 
-        return $this->db->getOne("content");
+        return $this->db->getOne("message");
     }
 
     /**
@@ -160,11 +160,11 @@ class DB
      * @return bool
      * @throws Exception
      */
-    public function deleteContent($data)
+    public function deleteMessage($data)
     {
-        $this->db->where('content_id', $data['content_id']);
+        $this->db->where('message_id', $data['message_id']);
         $this->db->where('chat_id', $data['chat_id']);
-        return $this->db->delete('content');
+        return $this->db->delete('message');
     }
 
     /**
@@ -172,11 +172,11 @@ class DB
      * @return bool
      * @throws Exception
      */
-    public function clearAllContent($chat_id)
+    public function clearAllMessage($chat_id)
     {
         $this->db->where('chat_id', $chat_id);
         return $this->db->update(
-            'content',
+            'message',
             [
                 'display' => 0
             ]
@@ -184,15 +184,15 @@ class DB
     }
 
     /**
-     * Adds content, returns content_id
+     * Adds message, returns message_id
      * @param $data
-     * @return int content_id
+     * @return int message_id
      * @throws Exception
      */
-    public function addContent($data)
+    public function addMessage($data)
     {
         return $this->db->insert(
-            'content',
+            'message',
             [
                 'chat_id' => $data['chat_id'],
                 'text' => $this->db->escape($data['text']),
@@ -207,15 +207,15 @@ class DB
     }
 
     /**
-     * update date reminder and view for Content
-     * @param $content_id
+     * update date reminder and view for Message
+     * @param $message_id
      * @throws Exception
      */
-    public function addDateReminderContent($content_id)
+    public function addDateReminderMessage($message_id)
     {
-        $this->db->where('content_id', $content_id);
+        $this->db->where('message_id', $message_id);
         $this->db->update(
-            'content',
+            'message',
             [
                 'date_reminder' => $this->db->now(),
                 'view' => $this->db->inc()
@@ -224,16 +224,16 @@ class DB
     }
 
     /**
-     * update Content
+     * update Message
      * @param $data
      * @throws Exception
      */
-    public function editContentByMessageId($data)
+    public function editMessageByMessageId($data)
     {
         $this->db->where('message_id', $data['message_id']);
         $this->db->where('chat_id', $data['chat_id']);
         $this->db->update(
-            'content',
+            'message',
             [
                 'text' => $this->db->escape($data['text'])
             ]

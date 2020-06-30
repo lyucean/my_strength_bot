@@ -5,11 +5,11 @@ namespace msb\command;
 use msb\core\DB;
 use Telegram;
 
-class Content
+class Message
 {
     private Telegram $telegram;
     private int $chat_id = 0;
-    private int $content_id = 0;
+    private int $message_id = 0;
     private DB $db;
 
     public function __construct($telegram)
@@ -22,13 +22,13 @@ class Content
     public function __debugInfo()
     {
         return [
-            'content_id' => $this->content_id,
+            'message_id' => $this->message_id,
         ];
     }
 
     public function edit()
     {
-        $this->db->editContentByMessageId(
+        $this->db->editMessageByMessageId(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
@@ -46,7 +46,7 @@ class Content
 
     public function addImage()
     {
-//        $this->db->editContentByMessageId(
+//        $this->db->editMessageByMessageId(
 //            [
 //                'chat_id' => $this->chat_id,
 //                'text' => $this->telegram->Text(),
@@ -75,7 +75,7 @@ class Content
 
         file_put_contents(DIR_FILE . $folder . $file_name, file_get_contents($url_on_server));
 
-        $this->content_id = $this->db->addContent(
+        $this->message_id = $this->db->addMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Caption(),
@@ -100,7 +100,7 @@ class Content
         }
 
         // double check
-        if ($this->db->checkDoubleContent(
+        if ($this->db->checkDoubleMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
@@ -115,7 +115,7 @@ class Content
             return;
         }
 
-        $this->content_id = $this->db->addContent(
+        $this->message_id = $this->db->addMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
@@ -123,7 +123,7 @@ class Content
             ]
         );
 
-        if (!$this->content_id) {
+        if (!$this->message_id) {
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
@@ -138,17 +138,18 @@ class Content
                 $this->telegram->buildInlineKeyBoardButton(
                     'Cancel add',
                     $url = '',
-                    '/content/cancel?content_id=' . $this->content_id
+                    '/message/cancel?message_id=' . $this->message_id
                 ),
             ],
         ];
 
-        $content = [
-            'chat_id' => $this->chat_id,
-            'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-            'text' => 'I saved it. №' . $this->content_id
-        ];
-        $this->telegram->sendMessage($content);
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
+                'text' => 'I saved it. №' . $this->message_id
+            ]
+        );
     }
 
     public function cancel()
@@ -160,24 +161,28 @@ class Content
 
         $param = get_var_query($this->telegram->Text());
 
-        if (empty($param['content_id'])) {
-            (new Error($this->telegram))->send('I did not find content.');
+        if (empty($param['message_id'])) {
+            (new Error($this->telegram))->send('I did not find message.');
         }
 
-        $this->content_id = $param['content_id'];
+        $this->message_id = $param['message_id'];
 
         $reply = 'Deleted.';
 
-        if (!$this->db->deleteContent(
+        if (!$this->db->deleteMessage(
             [
-                'content_id' => $this->content_id,
+                'message_id' => $this->message_id,
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            $reply = 'This content has already been removed.';
+            $reply = 'This message has already been removed.';
         }
 
-        $content = ['chat_id' => $this->chat_id, 'text' => $reply];
-        $this->telegram->sendMessage($content);
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'text' => $reply
+            ]
+        );
     }
 }

@@ -7,18 +7,18 @@ class HelperTest extends TestCase
     public function testGetVarQuery()
     {
         $this->assertSame(
-            ['content_id' => '123'],
-            get_var_query('/content/cancel?content_id=123')
+            ['message_id' => '123'],
+            get_var_query('/message/cancel?message_id=123')
         );
 
         $this->assertSame(
             ['a' => '1', 't' => '2'],
-            get_var_query('/content/cancel?a=1&t=2')
+            get_var_query('/message/cancel?a=1&t=2')
         );
 
         $this->assertSame(
             [],
-            get_var_query('/content/cancel')
+            get_var_query('/message/cancel')
         );
     }
 

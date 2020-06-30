@@ -3,7 +3,7 @@
 
 namespace msb\model;
 
-use msb\command\Content;
+use msb\command\Message;
 use msb\command\Now;
 use msb\core\Action;
 use msb\core\Model;
@@ -30,13 +30,13 @@ class Processing extends Model
 
             // If this is editing, just edit the message
             if ($this->telegram->getUpdateType() == 'edited_message') {
-                (new Content($this->telegram))->edit();
+                (new Message($this->telegram))->edit();
                 continue;
             }
 
             // If this is image
             if ($this->telegram->getUpdateType() == 'photo') {
-                (new Content($this->telegram))->addImage();
+                (new Message($this->telegram))->addImage();
                 continue;
             }
 
@@ -88,7 +88,7 @@ class Processing extends Model
             }
 
             // All that remains is sent to the controller by default
-            (new Content($this->telegram))->add();
+            (new Message($this->telegram))->add();
             continue;
         }
     }

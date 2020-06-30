@@ -44,24 +44,24 @@ class Catalog
 
     /**
      * forms a list of messages to send
-     * @param $contents
+     * @param $messages
      * @return array
      */
-    public function preparation($contents)
+    public function preparation($messages)
     {
         $message = [];
 
-        foreach ($contents as $content) {
-            $text = $content['text'];
-            $image = $content['image'];
+        foreach ($messages as $message) {
+            $text = $message['text'];
+            $image = $message['image'];
 
             if (!empty($text)) {
-                $text = shorten_line($content['text']);
+                $text = shorten_line($message['text']);
             }
             if (!empty($image)) {
-                $text = ' This is a picture: ' . '/get_' . $content['content_id'];
+                $text = ' This is a picture: ' . '/get_' . $message['message_id'];
             }
-            $text = "<b>№" . $content['content_id'] . '</b> - ' . $text . "\n";
+            $text = "<b>№" . $message['message_id'] . '</b> - ' . $text . "\n";
             $message[] = $text;
         }
 
@@ -70,9 +70,9 @@ class Catalog
 
     public function index()
     {
-        $contents = $this->db->getContents($this->chat_id);
+        $messages = $this->db->getMessages($this->chat_id);
 
-        if (empty($contents)) {
+        if (empty($messages)) {
             $this->send('Your list is empty.');
             return;
         }
@@ -80,7 +80,7 @@ class Catalog
         $max_message_length = 4000;
         $message = '';
 
-        foreach ($this->preparation($contents) as $row) {
+        foreach ($this->preparation($messages) as $row) {
             if ($max_message_length < mb_strlen($message . $row)) {
                 $this->send($message);
                 $message = '';
