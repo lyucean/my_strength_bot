@@ -60,7 +60,7 @@ class Processing extends Model
                 $this->db->cleanWaitingCommand($chat_id);
 
                 // if it is a request for a specific message
-                if (mb_substr($text, 0, 5, 'UTF-8') == '/get_') {
+                if (preg_match('/^\/_[0-9]+$/', $text)) {
                     (new Now($this->telegram))->get(substr(strrchr($text, "_"), 1));
                     continue;
                 }

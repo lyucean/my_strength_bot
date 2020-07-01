@@ -49,7 +49,7 @@ class Catalog
      */
     public function preparation($messages)
     {
-        $message = [];
+        $answer = [];
 
         foreach ($messages as $message) {
             $text = $message['text'];
@@ -59,13 +59,12 @@ class Catalog
                 $text = shorten_line($message['text']);
             }
             if (!empty($image)) {
-                $text = ' This is a picture: ' . '/get_' . $message['message_id'];
+                $text = ' This is a picture.';
             }
-            $text = "<b>№" . $message['message_id'] . '</b> - ' . $text . "\n";
-            $message[] = $text;
+            $answer[] = '/_' . $message['message_id'] . ' - ' . $text . "\n";
         }
 
-        return $message;
+        return $answer;
     }
 
     public function index()
