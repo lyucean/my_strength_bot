@@ -30,7 +30,8 @@
     "files": [
       "app/helper.php",
       "app/config.php",
-      "app/tracking.php"
+      "app/tracking.php",
+      "app/metric.php"
     ]
   },
   "config": {
