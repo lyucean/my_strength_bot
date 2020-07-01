@@ -123,7 +123,7 @@ class DB
      */
     public function checkDoubleMessage($data)
     {
-        $this->db->where("text", $this->db->escape($data['text']));
+        $this->db->where("text", $this->db->escape(trim($data['text'])));
         $this->db->where("chat_id", $data['chat_id']);
         $this->db->where("display", 1);
         return !empty($this->db->get("message"));
@@ -195,7 +195,7 @@ class DB
             'message',
             [
                 'chat_id' => $data['chat_id'],
-                'text' => $this->db->escape($data['text']),
+                'text' => $this->db->escape(trim($data['text'])),
                 'image' => $data['image'] ?? '',
                 'message_id' => $data['message_id'],
                 'view' => 0,
@@ -235,7 +235,7 @@ class DB
         $this->db->update(
             'message',
             [
-                'text' => $this->db->escape($data['text'])
+                'text' => $this->db->escape(trim($data['text']))
             ]
         );
     }
