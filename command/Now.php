@@ -33,7 +33,7 @@ class Now
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => "Your message list is empty.\nI have nothing to send you."
+                    'text' => 'Ваш список сообщений пуст.' . "\n" . 'У меня нет ничего для отправки.'
                 ]
             );
             return;
@@ -53,7 +53,7 @@ class Now
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => "No such message found."
+                    'text' => "Такое сообщение не найдено."
                 ]
             );
             return;

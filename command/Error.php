@@ -22,7 +22,7 @@ class Error
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Error: ' . $message
+                'text' => 'Ошибка: ' . $message
             ]
         );
 

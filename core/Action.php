@@ -2,9 +2,9 @@
 
 namespace msb\core;
 
-use ReflectionClass;
 use msb;
 use msb\command\Error;
+use ReflectionClass;
 
 class Action
 {
@@ -31,9 +31,9 @@ class Action
 
     public function execute($registry): void
     {
-        // Stop any magical methods being called
+        // Stop any magical methods being called.
         if (substr($this->method, 0, 2) == '__') {
-            (new Error($registry))->send('Calls to magic methods are not allowed.');
+            (new Error($registry))->send('Я не нашёл такую команду');
         }
 
         $file = DIR_COMMAND . $this->route . '.php';
@@ -41,7 +41,7 @@ class Action
 
         // Initialize the class
         if (!is_file($file)) {
-            (new Error($registry))->send('Could not call command /' . strtolower($this->route) . '!');
+            (new Error($registry))->send('Я не нашёл такую команду /' . strtolower($this->route) . '!');
         }
 
         include_once($file);
@@ -52,7 +52,7 @@ class Action
         $reflection = new ReflectionClass($class);
 
         if (!$reflection->hasMethod($this->method)) {
-            (new Error($registry))->send('Could not call command ' . $this->route . '/' . $this->method . '!');
+            (new Error($registry))->send('Не удалось вызвать команду ' . $this->route . '/' . $this->method . '!');
         }
 
         call_user_func_array(array($command, $this->method), []);

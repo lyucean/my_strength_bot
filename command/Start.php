@@ -30,8 +30,10 @@ class Start
             ]
         );
 
-        $message[] = "Hello!";
-        $message[] = "How it works: The bot sends you a message to remember every day at periodic intervals.";
+        $message[] = 'Привет!';
+        $message[] = 'Как это работает:';
+        $message[] = 'Ты отправляешь мне сообщения с текстом или картинкой, которые делают тебя сильнее.';
+        $message[] = 'Я сохраняю их и отправляю тебе обратно, каждый день, в удобный для тебя интервал.';
 
         $this->telegram->sendMessage(
             [
@@ -41,8 +43,8 @@ class Start
         );
 
         $message = [];
-        $message[] = "To add a message to repeat, just send me a message.";
-        $message[] = "You can also edit any message you send in the usual way for telegrams.";
+        $message[] = 'Чтобы добавить сообщение для повторения, просто отправьте мне сообщение.';
+        $message[] = "Ты также можешь редактировать любое сообщение, обычным способом для телеграмм.";
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
@@ -51,8 +53,8 @@ class Start
         );
 
         $message = [];
-        $message[] = "To receive a message to repeat right now: /now";
-        $message[] = "The time interval and the number of messages you can configure in the settings: /setting";
+        $message[] = "Чтобы получить сообщение, чтобы прямо сейчас: /now";
+        $message[] = "Временной интервал и количество сообщений вы можете настроить в настройках: /setting";
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,

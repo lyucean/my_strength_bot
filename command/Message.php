@@ -39,7 +39,7 @@ class Message
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Editing has been saved.'
+                'text' => 'Я сохранил изменения.'
             ]
         );
     }
@@ -87,7 +87,7 @@ class Message
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'I saved the image 😉'
+                'text' => 'Я сохранил картинку 😉'
             ]
         );
     }
@@ -95,7 +95,7 @@ class Message
     public function add()
     {
         if (!in_array($this->telegram->getUpdateType(), ['message', 'reply_to_message'])) {
-            (new Error($this->telegram))->send('I don\'t know how to work with this type of message.');
+            (new Error($this->telegram))->send('Я не знаю, как работать с этим типом сообщений.');
             return;
         }
 
@@ -109,7 +109,7 @@ class Message
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'This message already exists.'
+                    'text' => 'Это сообщение уже существует.'
                 ]
             );
             return;
@@ -127,7 +127,7 @@ class Message
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'I could not save this message.'
+                    'text' => 'Я не смог сохранить это сообщение, попробуйте чуть позже.'
                 ]
             );
             return;
@@ -136,7 +136,7 @@ class Message
         $option = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Cancel add',
+                    'Отменить',
                     $url = '',
                     '/message/cancel?message_id=' . $this->message_id
                 ),
@@ -147,7 +147,7 @@ class Message
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'I saved it. №' . $this->message_id
+                'text' => 'Я сохранил. №' . $this->message_id . ' 😉'
             ]
         );
     }
@@ -167,7 +167,7 @@ class Message
 
         $this->message_id = $param['message_id'];
 
-        $reply = 'Deleted.';
+        $reply = 'Сообщение №' . $this->message_id . ' удалено.';
 
         if (!$this->db->deleteMessage(
             [
@@ -175,7 +175,7 @@ class Message
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            $reply = 'This message has already been removed.';
+            $reply = 'Это сообщение уже удалено.';
         }
 
         $this->telegram->sendMessage(

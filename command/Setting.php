@@ -64,7 +64,7 @@ class Setting
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Choose to change'
+                'text' => 'Выберите для изменения:'
             ]
         );
     }
@@ -77,7 +77,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Enter how many messages to send you per day [max ' . MAXIMUM_OF_MESSAGES_PER_DAY . '].'
+                'text' => 'Введите количество сообщений, которое отправлять вам каждый день [максимум ' . MAXIMUM_OF_MESSAGES_PER_DAY . '].'
             ]
         );
     }
@@ -101,7 +101,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Save: ' . $quantity . ' ' . (1 == $quantity ? 'message' : 'messages') . ' every day.'
+                'text' => 'Сохранил: ' . $quantity . ' ' . (1 == $quantity ? 'сообщение' : 'сообщений') . ' каждый день.'
             ]
         );
     }
@@ -114,8 +114,8 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Enter your time zone offset [number only, eg -3 or +2].'
-                    . "\n" . 'If you don’t know what it is, then google "Time zone in your city".'
+                'text' => 'Введите смещение часового пояса [только число со знаком, например, -3 или +2].'
+                    . "\n" . 'Если вы не знаете, что это такое, воспользуйтесь Google "Часовой пояс в вашем городе".'
             ]
         );
     }
@@ -126,7 +126,7 @@ class Setting
 
         if ($offset < -13 || 14 < $offset) {
             (new Error($this->telegram))->send(
-                'I am waiting for a number from -12 to 14',
+                'Жду число от -12 до 14',
                 false
             );
             // return the command on hold;
@@ -139,7 +139,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Save time zone offset: ' . (0 < $offset ? '+' : '') . $offset
+                'text' => 'Сохранил временную зону:' . (0 < $offset ? '+' : '') . $offset
             ]
         );
     }
@@ -152,7 +152,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Enter the interval at which it is convenient for you to receive messages [eg 9-20 or 10-12].'
+                'text' => 'Введите интервал, в котором вам удобно получать сообщения [например, 9-20 или 10-12].'
             ]
         );
     }
@@ -197,7 +197,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Save interval: ' . $hour_start . ':00-' . $hour_end . ':00'
+                'text' => 'Сохранил интервал: ' . $hour_start . ':00-' . $hour_end . ':00'
             ]
         );
     }
@@ -207,14 +207,14 @@ class Setting
         $option = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Show all list',
+                    'Показать все сохранённые сообщения',
                     $url = '',
                     '/catalog'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Clear list',
+                    'Очистить все сохранённые сообщения',
                     $url = '',
                     '/setting/clear_list'
                 )
@@ -225,7 +225,7 @@ class Setting
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Choose to change'
+                'text' => 'Выберите, чтобы изменить:'
             ]
         );
     }
@@ -237,8 +237,8 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Are you sure you want to clear the whole list irrevocably?'
-                    . "\n" . 'If it is, send a "Yes" in a message.'
+                'text' => 'Вы уверены, что хотите удалить все сообщения безвозвратно?'
+                    . "\n" . 'Если это так, отправьте «Да» в сообщении.'
             ]
         );
     }
@@ -247,11 +247,11 @@ class Setting
     {
         $confirm = $this->telegram->Text();
 
-        if (trim(strtolower($confirm)) != "yes") {
+        if (trim(strtolower($confirm)) != "да") {
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'The list has not been cleared.'
+                    'text' => 'Сообщения не были удалены, т.к. я ждал «Да» в сообщении.'
                 ]
             );
             return;
@@ -262,7 +262,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'The list has been cleared.'
+                'text' => 'Все сообщения были удалены.'
             ]
         );
     }
