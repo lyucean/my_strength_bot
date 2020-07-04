@@ -160,13 +160,13 @@ class Setting
     private function validate_interval($hour_start, $hour_end)
     {
         if ($hour_start < 1 || 24 < $hour_start) {
-            $this->error[] = 'I am waiting for a first number from 1 to 24.';
+            $this->error[] = 'Я ожидаю первое число от 1 до 24.';
         }
         if ($hour_end < 1 || 24 < $hour_end) {
-            $this->error[] = 'I am waiting for a second number from 1 to 24.';
+            $this->error[] = 'Я ожидаю второе число от 1 до 24.';
         }
         if ($hour_end < $hour_start) {
-            $this->error[] = 'First number cannot be larger than the second.';
+            $this->error[] = 'Второе число не может быть больше первого.';
         }
 
         return count($this->error) == 0;
