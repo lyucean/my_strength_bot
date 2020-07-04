@@ -205,18 +205,17 @@ class DB
     /**
      * Adds message, returns message_id
      * @param $data
-     * @return int message_id
      * @throws Exception
      */
     public function addMessage($data)
     {
-        return $this->db->insert(
+        $this->db->insert(
             'message',
             [
+                'message_id' => $data['message_id'],
                 'chat_id' => $data['chat_id'],
                 'text' => $this->db->escape(trim($data['text'])),
                 'image' => $data['image'] ?? '',
-                'message_id' => $data['message_id'],
                 'view' => 0,
                 'date_added' => $this->db->now(),
                 'date_reminder' => $this->db->now(),

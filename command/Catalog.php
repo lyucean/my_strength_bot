@@ -59,7 +59,7 @@ class Catalog
                 $text = shorten_line($message['text']);
             }
             if (!empty($image)) {
-                $text = ' This is a picture.';
+                $text = ' 🖌️ - ' . $text;
             }
             $answer[] = '/_' . $message['message_id'] . ' - ' . $text . "\n";
         }
@@ -72,7 +72,7 @@ class Catalog
         $messages = $this->db->getMessages($this->chat_id);
 
         if (empty($messages)) {
-            $this->send('Your list is empty.');
+            $this->send('Ваш список пуст.');
             return;
         }
 

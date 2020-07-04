@@ -28,10 +28,16 @@ class Message
 
     public function edit()
     {
+        $text = $this->telegram->Text();
+
+        if (!empty($this->telegram->Caption())) {
+            $text = $this->telegram->Caption();
+        }
+
         $this->db->editMessageByMessageId(
             [
                 'chat_id' => $this->chat_id,
-                'text' => $this->telegram->Text(),
+                'text' => $text,
                 'message_id' => $this->telegram->MessageID(),
             ]
         );
@@ -46,20 +52,12 @@ class Message
 
     public function addImage()
     {
-//        $this->db->editMessageByMessageId(
-//            [
-//                'chat_id' => $this->chat_id,
-//                'text' => $this->telegram->Text(),
-//                'message_id' => $this->telegram->MessageID(),
-//            ]
-//        );
-
         // take the highest resolution
         $array = $this->telegram->Photo();
         $file = $this->telegram->getFile(array_pop($array)['file_id']);
 
         if (!array_key_exists('ok', $file) || !array_key_exists('result', $file)) {
-            (new Error($this->telegram))->send('I could not download the picture, the server is unavailable.');
+            (new Error($this->telegram))->send('Я не смог скачать картинку, сервер недоступен.');
         }
 
         $file_path = $file['result']['file_path'];
@@ -75,7 +73,9 @@ class Message
 
         file_put_contents(DIR_FILE . $folder . $file_name, file_get_contents($url_on_server));
 
-        $this->message_id = $this->db->addMessage(
+        $this->message_id = $this->telegram->MessageID();
+
+        $this->db->addMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Caption(),
@@ -84,10 +84,21 @@ class Message
             ]
         );
 
+        $option = [
+            [
+                $this->telegram->buildInlineKeyBoardButton(
+                    'Отменить',
+                    $url = '',
+                    '/message/cancel?message_id=' . $this->message_id
+                ),
+            ],
+        ];
+
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я сохранил картинку 😉'
+                'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
+                'text' => 'Я сохранил. №' . $this->message_id . ' 😉'
             ]
         );
     }
@@ -115,23 +126,15 @@ class Message
             return;
         }
 
-        $this->message_id = $this->db->addMessage(
+        $this->message_id = $this->telegram->MessageID();
+
+        $this->db->addMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
                 'message_id' => $this->telegram->MessageID(),
             ]
         );
-
-        if (!$this->message_id) {
-            $this->telegram->sendMessage(
-                [
-                    'chat_id' => $this->chat_id,
-                    'text' => 'Я не смог сохранить это сообщение, попробуйте чуть позже.'
-                ]
-            );
-            return;
-        }
 
         $option = [
             [
@@ -155,33 +158,43 @@ class Message
     public function cancel()
     {
         if ('callback_query' != $this->telegram->getUpdateType()) {
-            (new Error($this->telegram))->send('This is not a callback query.', false);
+            (new Error($this->telegram))->send('Ошибка запроса', false);
             return;
         }
 
         $param = get_var_query($this->telegram->Text());
 
         if (empty($param['message_id'])) {
-            (new Error($this->telegram))->send('I did not find message.');
+            (new Error($this->telegram))->send('Я не могу найти это сообщение');
+            return;
         }
 
         $this->message_id = $param['message_id'];
 
-        $reply = 'Сообщение №' . $this->message_id . ' удалено.';
-
-        if (!$this->db->deleteMessage(
+        if (!$this->db->ExistCheckMessage(
             [
                 'message_id' => $this->message_id,
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            $reply = 'Это сообщение уже удалено.';
+            (new Error($this->telegram))->send(
+                'Сообщение №' . $this->message_id . ' уже удалено или не существует.',
+                false
+            );
+            return;
         }
+
+        $this->db->deleteMessage(
+            [
+                'message_id' => $this->message_id,
+                'chat_id' => $this->chat_id,
+            ]
+        );
 
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => $reply
+                'text' => 'Я удалил сообщение №' . $this->message_id
             ]
         );
     }
