@@ -149,12 +149,26 @@ class DB
 
     /**
      * @param $message_id
-     * @return array|MysqliDb|string
+     * @return array
      * @throws Exception
      */
     public function getMessage($message_id)
     {
         $this->db->where("message_id", (int)$message_id);
+        $this->db->where("display", 1);
+
+        return $this->db->getOne("message");
+    }
+
+    /**
+     * @param int $chat_id
+     * @return array
+     * @throws Exception
+     */
+    public function getLastMessage($chat_id)
+    {
+        $this->db->where("chat_id", $chat_id);
+        $this->db->orderBy("date_reminder", "DESC");
         $this->db->where("display", 1);
 
         return $this->db->getOne("message");
