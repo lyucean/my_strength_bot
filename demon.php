@@ -14,7 +14,7 @@ $processing = new  Processing();
 while ($minute == gmdate("i")) {
     echo PHP_EOL . gmdate("i:s");
     $processing->check();
-    sleep(2);
+    sleep(1);
 
     // для дев окружения крутим бесконечно
     if (OC_ENV_DEV) {

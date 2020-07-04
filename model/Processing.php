@@ -24,24 +24,24 @@ class Processing extends Model
         if (!array_key_exists('result', $updates) || empty($updates['result'])) {
             return;
         }
+
         for ($i = 0; $i < (int)$this->telegram->UpdateCount(); $i++) {
             // You NEED to call serveUpdate before accessing the values of message in Telegram Class
             $this->telegram->serveUpdate($i);
+
+            $text = $this->telegram->Text();
+            $chat_id = $this->telegram->ChatID();
+
+            // для дев окружения всегда выкидываем ответ в консоль
+            if (OC_ENV_DEV) {
+                echo ddf($text, false);
+            }
 
             // If this is editing, just edit the message
             if ($this->telegram->getUpdateType() == 'edited_message') {
                 (new Message($this->telegram))->edit();
                 continue;
             }
-
-            // If this is image
-            if ($this->telegram->getUpdateType() == 'photo') {
-                (new Message($this->telegram))->addImage();
-                continue;
-            }
-
-            $text = $this->telegram->Text();
-            $chat_id = $this->telegram->ChatID();
 
             // Tracking activity
             $this->db->addChatHistory(
@@ -84,6 +84,12 @@ class Processing extends Model
                 $action->execute($this->telegram);
 
                 ya_metric($chat_id, $waiting['command']);
+                continue;
+            }
+
+            // If this is image
+            if ($this->telegram->getUpdateType() == 'photo') {
+                (new Message($this->telegram))->addImage();
                 continue;
             }
 
