@@ -121,9 +121,14 @@ class DB
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function checkDoubleMessage($data)
+    public function ExistCheckMessage($data)
     {
-        $this->db->where("text", $this->db->escape(trim($data['text'])));
+        if (isset($data['text'])) {
+            $this->db->where("text", $this->db->escape(trim($data['text'])));
+        }
+        if (isset($data['message_id'])) {
+            $this->db->where("message_id", (int)$data['message_id']);
+        }
         $this->db->where("chat_id", $data['chat_id']);
         $this->db->where("display", 1);
         return !empty($this->db->get("message"));

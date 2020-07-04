@@ -100,7 +100,7 @@ class Message
         }
 
         // double check
-        if ($this->db->checkDoubleMessage(
+        if ($this->db->ExistCheckMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
