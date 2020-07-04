@@ -9,7 +9,7 @@ use Telegram;
 class Error
 {
     private Telegram $telegram;
-    private $chat_id;
+    private int $chat_id;
 
     public function __construct($telegram)
     {
@@ -26,11 +26,9 @@ class Error
             ]
         );
 
-        // on dev always throw an Exception for testing
-        if (OC_ENV_DEV ||
-            $throw) {
+        if ($throw) {
             $message = '[' . $this->telegram->getUpdateType() . '] ' . $message;
-            throw new Exception($message);
+            new Exception($message);
         }
     }
 }

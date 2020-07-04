@@ -12,10 +12,14 @@ use msb\model\Schedule;
 $minute = gmdate("i");
 $processing = new  Processing();
 while ($minute == gmdate("i")) {
-    echo gmdate("i:s"), PHP_EOL;
+    echo PHP_EOL . gmdate("i:s");
     $processing->check();
-    sleep(1);
-//    usleep(500000);
+    sleep(2);
+
+    // для дев окружения крутим бесконечно
+    if (OC_ENV_DEV) {
+        $minute = gmdate("i");
+    }
 }
 
 // Let's create a mailing list for the day.

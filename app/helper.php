@@ -8,7 +8,7 @@ if (!function_exists('ddf')) {
      */
     function ddf($var, $die = true)
     {
-        echo '<pre>' . PHP_EOL;
+        echo PHP_EOL . gmdate("i:s") . ' ' . PHP_EOL;
         print_r($var);
         flush();
         if ($die) {
