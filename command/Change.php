@@ -95,7 +95,7 @@ class Change
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            (new Error($this->telegram))->send('Сообщение №' . $message_id . ' уже удалено или не существует.', false);
+            (new Error($this->telegram))->send('Сообщение /_' . $message_id . ' уже удалено или не существует.', false);
             return;
         }
 
@@ -109,7 +109,7 @@ class Change
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я удалил сообщение №' . $message_id
+                'text' => 'Я удалил сообщение /_' . $message_id
             ]
         );
     }
@@ -132,7 +132,7 @@ class Change
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Сообщение №' . $m_last['message_id'] . ' "' . shorten_line($m_last['text']) . '" удалено'
+                'text' => 'Сообщение /_' . $m_last['message_id'] . ' "' . shorten_line($m_last['text']) . '" удалено'
             ]
         );
     }

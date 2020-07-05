@@ -98,7 +98,7 @@ class Message
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Я сохранил. №' . $this->message_id . ' 😉'
+                'text' => 'Я сохранил. /_' . $this->message_id . ' 😉'
             ]
         );
     }
@@ -150,7 +150,7 @@ class Message
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Я сохранил. №' . $this->message_id . ' 😉'
+                'text' => 'Я сохранил. /_' . $this->message_id . ' 😉'
             ]
         );
     }
@@ -178,7 +178,7 @@ class Message
             ]
         )) {
             (new Error($this->telegram))->send(
-                'Сообщение №' . $this->message_id . ' уже удалено или не существует.',
+                'Сообщение /_' . $this->message_id . ' уже удалено или не существует.',
                 false
             );
             return;
@@ -194,7 +194,7 @@ class Message
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я удалил сообщение №' . $this->message_id
+                'text' => 'Я удалил сообщение /_' . $this->message_id
             ]
         );
     }

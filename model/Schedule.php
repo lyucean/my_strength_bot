@@ -22,7 +22,7 @@ class Schedule extends Model
                 continue;
             }
 
-            $answer = $message['text'] . ' №' . $message['message_id'];
+            $answer = $message['text'] . ' /_' . $message['message_id'];
 
             // if this is image
             if (!empty($message['image'])) {

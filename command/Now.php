@@ -63,7 +63,7 @@ class Now
 
     protected function send($message)
     {
-        $answer = $message['text'] . ' №' . $message['message_id'];
+        $answer = $message['text'] . ' /_' . $message['message_id'];
 
         if (!empty($message['image'])) {
             $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');
