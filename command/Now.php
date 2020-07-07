@@ -44,7 +44,7 @@ class Now
     public function get($message_id)
     {
         if (empty($message_id)) {
-            (new Error($this->telegram))->send('I did not find message.');
+            (new Error($this->telegram))->send('Я не нашёл это сообщение.');
         }
 
         $message = $this->db->getMessage($message_id);
