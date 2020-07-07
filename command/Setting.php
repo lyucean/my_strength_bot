@@ -32,32 +32,32 @@ class Setting
         $option = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Message Interval: from ' . $hour_start . ':00 to ' . $hour_end . ':00',
+                    'Интервал сообщений: от' . $hour_start . ':00 до ' . $hour_end . ':00',
                     $url = '',
                     '/setting/change_interval'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Number of messages: ' . $quantity . ' ' . (1 == $quantity ? 'message' : 'messages'),
+                    'Количество сообщений: ' . $quantity . ' ' . 'шт',
                     $url = '',
                     '/setting/change_number'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Your time zone: ' . ($time_zone_offset < 0 ? '' : '+') . $time_zone_offset,
+                    'Ваша временная зона: ' . ($time_zone_offset < 0 ? '' : '+') . $time_zone_offset,
                     $url = '',
                     '/setting/change_time_zone'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Your list',
+                    'Очистить все сохранённые сообщения',
                     $url = '',
-                    '/setting/change_list'
+                    '/setting/clear_list'
                 )
-            ],
+            ]
         ];
 
         $this->telegram->sendMessage(
@@ -88,7 +88,7 @@ class Setting
 
         if ($quantity < 1 || MAXIMUM_OF_MESSAGES_PER_DAY < $quantity) {
             (new Error($this->telegram))->send(
-                'I am waiting for a number from 1 to ' . MAXIMUM_OF_MESSAGES_PER_DAY,
+                'Я ожидаю цифру от 1 до ' . MAXIMUM_OF_MESSAGES_PER_DAY,
                 false
             );
             // return the command on hold;
@@ -198,34 +198,6 @@ class Setting
             [
                 'chat_id' => $this->chat_id,
                 'text' => 'Сохранил интервал: ' . $hour_start . ':00-' . $hour_end . ':00'
-            ]
-        );
-    }
-
-    public function change_list()
-    {
-        $option = [
-            [
-                $this->telegram->buildInlineKeyBoardButton(
-                    'Показать все сохранённые сообщения',
-                    $url = '',
-                    '/catalog'
-                )
-            ],
-            [
-                $this->telegram->buildInlineKeyBoardButton(
-                    'Очистить все сохранённые сообщения',
-                    $url = '',
-                    '/setting/clear_list'
-                )
-            ],
-        ];
-
-        $this->telegram->sendMessage(
-            [
-                'chat_id' => $this->chat_id,
-                'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Выберите, чтобы изменить:'
             ]
         );
     }
