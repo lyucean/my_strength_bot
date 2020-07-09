@@ -22,7 +22,7 @@ class Error
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => '❗ ' . $message
+                'text' => '👮🏻‍♀️ ' . $message
             ]
         );
 

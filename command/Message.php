@@ -45,7 +45,7 @@ class Message
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я сохранил изменения.'
+                'text' => 'Я сохранила изменения.'
             ]
         );
     }
@@ -98,7 +98,7 @@ class Message
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Я сохранил. /_' . $this->message_id . ' 😉'
+                'text' => 'Я сохранила /_' . $this->message_id . ' 👩🏽‍'
             ]
         );
     }
@@ -106,7 +106,9 @@ class Message
     public function add()
     {
         if (!in_array($this->telegram->getUpdateType(), ['message', 'reply_to_message'])) {
-            (new Error($this->telegram))->send('Я не знаю, как работать с этим типом сообщений.');
+            (new Error($this->telegram))->send(
+                'Я не знаю, как работать с этим типом сообщений 🤷🏻'
+            );
             return;
         }
 
@@ -120,7 +122,7 @@ class Message
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'Это сообщение уже существует.'
+                    'text' => 'Это сообщение уже существует 👮🏻‍♀️'
                 ]
             );
             return;
@@ -150,7 +152,7 @@ class Message
             [
                 'chat_id' => $this->chat_id,
                 'reply_markup' => $this->telegram->buildInlineKeyBoard($option),
-                'text' => 'Я сохранил. /_' . $this->message_id . ' 😉'
+                'text' => 'Я сохранила /_' . $this->message_id . ' 📝'
             ]
         );
     }
@@ -158,14 +160,14 @@ class Message
     public function cancel()
     {
         if ('callback_query' != $this->telegram->getUpdateType()) {
-            (new Error($this->telegram))->send('Ошибка запроса', false);
+            (new Error($this->telegram))->send('Ошибка запроса ⛔', false);
             return;
         }
 
         $param = get_var_query($this->telegram->Text());
 
         if (empty($param['message_id'])) {
-            (new Error($this->telegram))->send('Я не могу найти это сообщение');
+            (new Error($this->telegram))->send('Я не смогла найти это сообщение 🤷🏻');
             return;
         }
 
@@ -177,10 +179,8 @@ class Message
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            (new Error($this->telegram))->send(
-                'Сообщение /_' . $this->message_id . ' уже удалено или не существует.',
-                false
-            );
+            (new Error($this->telegram))
+                ->send('Сообщение /_' . $this->message_id . ' уже удалено 🙆🏻‍♀️', false);
             return;
         }
 
@@ -194,7 +194,7 @@ class Message
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я удалил сообщение /_' . $this->message_id
+                'text' => 'Я удалила сообщение /_' . $this->message_id . '🙅🏻‍♀️'
             ]
         );
     }

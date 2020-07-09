@@ -26,6 +26,10 @@ class Catalog
         $this->db = new DB();
     }
 
+    /**
+     * method for sending messages
+     * @param $message
+     */
     protected function send($message)
     {
         if (empty($message)) {

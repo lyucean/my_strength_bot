@@ -33,7 +33,7 @@ class Action
     {
         // Stop any magical methods being called.
         if (substr($this->method, 0, 2) == '__') {
-            (new Error($registry))->send('Я не нашёл такую команду');
+            (new Error($registry))->send('Я не нашла такую команду');
         }
 
         $file = DIR_COMMAND . $this->route . '.php';
@@ -41,7 +41,9 @@ class Action
 
         // Initialize the class
         if (!is_file($file)) {
-            (new Error($registry))->send('Я не нашёл такую команду /' . strtolower($this->route) . '!');
+            (new Error($registry))->send(
+                'Я не нашла такую команду /' . strtolower($this->route) . '!'
+            );
         }
 
         include_once($file);

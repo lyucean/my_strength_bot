@@ -21,28 +21,28 @@ class Menu
         $option = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Каталог сообщений',
+                    '🧾 Каталог сообщений',
                     $url = '',
                     '/catalog'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Настройки',
+                    '👩🏻‍🔧 Настройки',
                     $url = '',
                     '/setting'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Как это работает',
+                    'ℹ️Как это работает?',
                     $url = '',
                     '/faq'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'Тех.поддержка',
+                    '🆘 Помощь',
                     $url = '',
                     '/help'
                 )

@@ -33,7 +33,7 @@ class Now
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'Ваш список сообщений пуст.' . "\n" . 'У меня нет ничего для отправки.'
+                    'text' => 'Ваш список сообщений пуст.' . "\n" . 'У меня нет ничего для отправки 🤷🏻'
                 ]
             );
             return;
@@ -44,7 +44,7 @@ class Now
     public function get($message_id)
     {
         if (empty($message_id)) {
-            (new Error($this->telegram))->send('Я не нашёл это сообщение.');
+            (new Error($this->telegram))->send('Я не нашла это сообщение 🕵🏻‍♀️');
         }
 
         $message = $this->db->getMessage($message_id);
@@ -53,7 +53,7 @@ class Now
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => "Такое сообщение не найдено."
+                    'text' => "Такое сообщение не найдено 🕵🏻‍♀️"
                 ]
             );
             return;
