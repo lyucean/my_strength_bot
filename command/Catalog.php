@@ -72,7 +72,7 @@ class Catalog
         $messages = $this->db->getMessages($this->chat_id);
 
         if (empty($messages)) {
-            $this->send('Ваш список пуст.');
+            $this->send('Список пока пуст 🙃');
             return;
         }
 

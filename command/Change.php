@@ -25,7 +25,7 @@ class Change
     {
         // проверка на наличие сообщений
         if (empty($this->db->getMessages($this->chat_id))) {
-            (new Error($this->telegram))->send('У вас нет сообщений, нечего изменять', false);
+            (new Error($this->telegram))->send('У вас пока нет', false);
             return;
         }
 
@@ -36,9 +36,16 @@ class Change
                     [
                         [
                             $this->telegram->buildInlineKeyBoardButton(
+                                'Изменить последнее присланное',
+                                $url = '',
+                                '/change/choice_last_sent'
+                            )
+                        ],
+                        [
+                            $this->telegram->buildInlineKeyBoardButton(
                                 'Изменить',
                                 $url = '',
-                                '/change/choice_edit'
+                                '/change/choice_choice'
                             )
                         ],
                         [
@@ -70,7 +77,7 @@ class Change
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Введите норме сообщения, который хотели бы изменить, я жду просто цифру [например 10].'
+                'text' => 'Введите номер сообщения, который хотели бы изменить, я жду просто цифру [например 10].'
             ]
         );
     }
@@ -95,7 +102,10 @@ class Change
                 'chat_id' => $this->chat_id,
             ]
         )) {
-            (new Error($this->telegram))->send('Сообщение /_' . $message_id . ' уже удалено или не существует.', false);
+            (new Error($this->telegram))->send(
+                'Сообщение /_' . $message_id . ' уже удалено или не существует 🤚',
+                false
+            );
             return;
         }
 
@@ -109,7 +119,7 @@ class Change
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Я удалил сообщение /_' . $message_id
+                'text' => 'Я удалил сообщение /_' . $message_id . ' 👌'
             ]
         );
     }
@@ -119,7 +129,7 @@ class Change
         $m_last = $this->db->getLastMessage($this->chat_id);
 
         if (empty($m_last)) {
-            (new Error($this->telegram))->send('Нет сообщений.', false);
+            (new Error($this->telegram))->send('Нет сообщений 🤚', false);
         }
 
         $this->db->deleteMessage(
@@ -132,7 +142,9 @@ class Change
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Сообщение /_' . $m_last['message_id'] . ' "' . shorten_line($m_last['text']) . '" удалено'
+                'text' => 'Сообщение /_' . $m_last['message_id'] . ' "' . shorten_line(
+                        $m_last['text']
+                    ) . '" удалено 👌'
             ]
         );
     }
