@@ -23,7 +23,7 @@ function ya_metric($id, $command)
 
     // cut parameters
     if (preg_match('/^\/_[0-9]$/', $command)) {
-        $command = '/_';
+        $command = 'get_a_message';
     }
 
     // cut parameters
