@@ -39,16 +39,9 @@ class Change
                     [
                         [
                             $this->telegram->buildInlineKeyBoardButton(
-                                '✏ Изменить последнее присланное ',
+                                '✏ Изменить сообщение',
                                 $url = '',
-                                '/change/choice_last_sent'
-                            )
-                        ],
-                        [
-                            $this->telegram->buildInlineKeyBoardButton(
-                                '✏️Изменить по номеру',
-                                $url = '',
-                                '/change/choice_choice'
+                                '/change/choice'
                             )
                         ],
                         [
@@ -147,6 +140,18 @@ class Change
                 'chat_id' => $this->chat_id,
                 'text' => 'Сообщение /_' . $m_last['message_id']
                     . ' "' . shorten_line($m_last['text']) . '" удалено 👌'
+            ]
+        );
+    }
+
+    public function choice()
+    {
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'text' => 'Два способа:'
+                    . PHP_EOL . '1. Найти, где ты отправляешь мне это сообщение и отредактировать обычным для telegram способом.'
+                    . PHP_EOL . '2. Удалить сообщение и отправить мне уже изменённый текст.'
             ]
         );
     }
