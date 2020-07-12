@@ -35,14 +35,14 @@ class Menu
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    'ℹ️Как это работает?',
+                    'ℹ Как это работает?',
                     $url = '',
                     '/faq'
                 )
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    '🆘 Помощь',
+                    '🆘 Пожаловаться на баг',
                     $url = '',
                     '/help'
                 )
