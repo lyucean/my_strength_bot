@@ -217,9 +217,7 @@ class Setting
 
     public function clear_list_confirm()
     {
-        $confirm = $this->telegram->Text();
-
-        if (trim(strtolower($confirm)) != "да") {
+        if (trim(mb_strtolower($this->telegram->Text(), 'UTF-8')) != "да") {
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
