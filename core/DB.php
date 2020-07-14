@@ -11,7 +11,7 @@ class DB
 
     public function __construct()
     {
-        $this->db = new MysqliDb (
+        $this->db = new MysqliDb(
             array(
                 'host' => DB_HOST,
                 'username' => DB_USERNAME,

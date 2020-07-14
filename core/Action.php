@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpIncludeInspection */
 
 namespace msb\core;
 

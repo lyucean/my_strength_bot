@@ -3,7 +3,6 @@
 
 namespace msb\command;
 
-
 use msb\core\DB;
 use Telegram;
 
@@ -94,5 +93,4 @@ class Catalog
 
         $this->send($message);
     }
-
 }

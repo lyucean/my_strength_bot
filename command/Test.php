@@ -3,7 +3,6 @@
 
 namespace msb\command;
 
-
 use Telegram;
 
 class Test

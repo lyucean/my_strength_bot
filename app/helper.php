@@ -122,9 +122,9 @@ if (!function_exists('shorten_link')) {
                             }
                             $link = $match[2] ?: $match[3];
                             return '<' . array_push(
-                                    $links,
-                                    "<a href=\"$protocol://$link\">" . shorten_text($link) . "</a>"
-                                ) . '>';
+                                $links,
+                                "<a href=\"$protocol://$link\">" . shorten_text($link) . "</a>"
+                            ) . '>';
                         },
                         $value
                     );
@@ -134,9 +134,11 @@ if (!function_exists('shorten_link')) {
                         '~([^\s<]+?@[^\s<]+?\.[^\s<]+)(?<![.,:])~',
                         function ($match) use (&$links) {
                             return '<' . array_push(
-                                    $links,
-                                    "<a href=\"mailto:{$match[1]}\">" . shorten_text($match[1]) . "</a>"
-                                ) . '>';
+                                $links,
+                                "<a href=\"mailto:{$match[1]}\">" . shorten_text(
+                                    $match[1]
+                                ) . "</a>"
+                            ) . '>';
                         },
                         $value
                     );
@@ -146,9 +148,11 @@ if (!function_exists('shorten_link')) {
                         '~' . preg_quote($protocol, '~') . '://([^\s<]+?)(?<![.,:])~i',
                         function ($match) use ($protocol, &$links) {
                             return '<' . array_push(
-                                    $links,
-                                    "<a href=\"$protocol://{$match[1]}\">" . shorten_text($match[1]) . "</a>"
-                                ) . '>';
+                                $links,
+                                "<a href=\"$protocol://{$match[1]}\">" . shorten_text(
+                                    $match[1]
+                                ) . "</a>"
+                            ) . '>';
                         },
                         $value
                     );
@@ -166,4 +170,3 @@ if (!function_exists('shorten_link')) {
         );
     }
 }
-

@@ -24,4 +24,3 @@ while ($minute == gmdate("i")) {
 
 // Let's create a mailing list for the day.
 (new  Schedule())->generate();
-

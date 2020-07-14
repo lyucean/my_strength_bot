@@ -8,7 +8,7 @@ use Telegram;
 class Message
 {
     private Telegram $telegram;
-    private int $chat_id = 0;
+    private int $chat_id;
     private int $message_id = 0;
     private DB $db;
 

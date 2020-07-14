@@ -8,7 +8,7 @@ use Telegram;
 class Start
 {
     private Telegram $telegram;
-    private int $chat_id = 0;
+    private int $chat_id;
     private DB $db;
 
     public function __construct($telegram)
@@ -43,7 +43,7 @@ class Start
         $message = [];
         $message[] = 'Это могут быть  цитаты, мысли, фото, видео.';
         $message[] = 'Присылай всё мне.';
-        $message[] = 'Я сохраняю их и отправлю обратно, по одной штуке в день, каждый день, в удобный для тебя интервал.';
+        $message[] = 'Я сохраняю их и отправлю обратно, по одной штуке в день, в удобный для тебя интервал.';
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,

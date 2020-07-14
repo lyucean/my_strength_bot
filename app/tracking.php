@@ -14,10 +14,3 @@ if (OC_ENV_PROD) {
     $handler = new Airbrake\ErrorHandler($notifier);
     $handler->register();
 }
-
-//try {
-//    throw new Exception('Test');
-//} catch (Exception $e) {
-//    Airbrake\Instance::notify($e);
-//}
-
