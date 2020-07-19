@@ -138,7 +138,18 @@ class Change
             [
                 'chat_id' => $this->chat_id,
                 'text' => 'Сообщение /_' . $m_last['message_id']
-                    . ' "' . shorten_line($m_last['text']) . '" удалено 👌'
+                    . ' "' . shorten_line($m_last['text']) . '" удалено 👌',
+            //                'reply_markup' => $this->telegram->buildInlineKeyBoard(
+            //                    [
+            //                        [
+            //                            $this->telegram->buildInlineKeyBoardButton(
+            //                                '◀ Отменить',
+            //                                $url = '',
+            //                                '/change/delete_undo'
+            //                            )
+            //                        ],
+            //                    ]
+            //                ),
             ]
         );
     }
