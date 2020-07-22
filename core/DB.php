@@ -155,8 +155,6 @@ class DB
     public function getMessage($message_id)
     {
         $this->db->where("message_id", (int)$message_id);
-        $this->db->where("display", 1);
-
         return $this->db->getOne("message");
     }
 
@@ -250,12 +248,20 @@ class DB
     {
         $this->db->where('message_id', $data['message_id']);
         $this->db->where('chat_id', $data['chat_id']);
-        $this->db->update(
-            'message',
-            [
-                'text' => $this->db->escape(trim($data['text']))
-            ]
-        );
+
+        if (isset($data['text'])) {
+            $changes['text'] = $this->db->escape(trim($data['text']));
+        }
+        if (isset($data['display'])) {
+            $changes['display'] = (bool)$data['display'];
+        }
+
+        if (isset($changes)) {
+            $this->db->update(
+                'message',
+                $changes
+            );
+        }
     }
 
     // ChatHistory ------------------------------------------------

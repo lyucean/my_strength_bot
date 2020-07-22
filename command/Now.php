@@ -58,12 +58,19 @@ class Now
             );
             return;
         }
+
         $this->send($message);
     }
 
     protected function send($message)
     {
-        $answer = $message['text'] . ' /_' . $message['message_id'];
+        $answer = $message['text'];
+        $answer .= ' /_' . $message['message_id'];
+
+        // Show marker, if display is off
+        if (!$message['display']) {
+            $answer .= PHP_EOL . '[удалено из листа]';
+        }
 
         if (!empty($message['image'])) {
             $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');

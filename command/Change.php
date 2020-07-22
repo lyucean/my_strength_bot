@@ -127,10 +127,11 @@ class Change
             (new Error($this->telegram))->send('Нет сообщений 🤚', false);
         }
 
-        $this->db->deleteMessage(
+        $this->db->editMessageByMessageId(
             [
                 'message_id' => $m_last['message_id'],
                 'chat_id' => $this->chat_id,
+                'display' => false,
             ]
         );
 
