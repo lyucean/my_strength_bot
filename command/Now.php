@@ -67,7 +67,7 @@ class Now
         $answer = '';
         // Show marker, if display is off
         if (!$message['display']) {
-            $answer .= '[удалённое сообщение]' . PHP_EOL;
+            $answer .= '[ удалённое сообщение ]' . PHP_EOL;
         }
 
         $answer .= $message['text'] . PHP_EOL;
