@@ -64,13 +64,15 @@ class Now
 
     protected function send($message)
     {
-        $answer = $message['text'];
-        $answer .= ' /_' . $message['message_id'];
-
+        $answer = '';
         // Show marker, if display is off
         if (!$message['display']) {
-            $answer .= PHP_EOL . '[удалено из листа]';
+            $answer .= '[удалённое сообщение]' . PHP_EOL;
         }
+
+        $answer .= $message['text'] . PHP_EOL;
+        $answer .= ' /_' . $message['message_id'];
+
 
         if (!empty($message['image'])) {
             $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');
