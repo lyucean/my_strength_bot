@@ -20,7 +20,9 @@
     "lyucean/telegram_bot_php": "dev-forked",
     "ext-iconv": "*",
     "robmorgan/phinx": "^0.12.3",
-    "sentry/sdk": "^3.0@beta"
+    "sentry/sdk": "^3.0@beta",
+    "sentry/sentry": "^3.0@beta",
+    "php-http/curl-client": "^2.1"
   },
   "autoload": {
     "psr-4": {
