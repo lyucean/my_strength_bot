@@ -113,7 +113,7 @@ class Message
         }
 
         // double check
-        if ($this->db->ExistCheckMessage(
+        if ($this->db->existCheckMessage(
             [
                 'chat_id' => $this->chat_id,
                 'text' => $this->telegram->Text(),
@@ -173,7 +173,7 @@ class Message
 
         $this->message_id = $param['message_id'];
 
-        if (!$this->db->ExistCheckMessage(
+        if (!$this->db->existCheckMessage(
             [
                 'message_id' => $this->message_id,
                 'chat_id' => $this->chat_id,

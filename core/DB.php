@@ -121,7 +121,7 @@ class DB
      * @return array|MysqliDb|string
      * @throws Exception
      */
-    public function ExistCheckMessage($data)
+    public function existCheckMessage($data)
     {
         if (isset($data['text'])) {
             $this->db->where("text", $this->db->escape(trim($data['text'])));

@@ -91,7 +91,7 @@ class Change
             return;
         }
 
-        if (!$this->db->ExistCheckMessage(
+        if (!$this->db->existCheckMessage(
             [
                 'message_id' => $message_id,
                 'chat_id' => $this->chat_id,
