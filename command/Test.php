@@ -3,6 +3,7 @@
 
 namespace msb\command;
 
+use Exception;
 use Telegram;
 
 class Test
@@ -14,6 +15,19 @@ class Test
     {
         $this->telegram = $telegram;
         $this->chat_id = $this->telegram->ChatID();
+    }
+
+    public function error()
+    {
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'text' => '`Error`',
+                'parse_mode' => 'MarkdownV2'
+            ]
+        );
+
+        throw new Exception("My first Sentry error!");
     }
 
     public function index()

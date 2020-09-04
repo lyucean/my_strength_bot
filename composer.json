@@ -19,7 +19,8 @@
     "airbrake/phpbrake": "^0.7.3",
     "lyucean/telegram_bot_php": "dev-forked",
     "ext-iconv": "*",
-    "robmorgan/phinx": "^0.12.3"
+    "robmorgan/phinx": "^0.12.3",
+    "sentry/sdk": "^3.0@beta"
   },
   "autoload": {
     "psr-4": {
@@ -30,7 +31,7 @@
     "files": [
       "app/helper.php",
       "app/config.php",
-      "app/tracking.php",
+      "app/error.php",
       "app/metric.php"
     ]
   },
