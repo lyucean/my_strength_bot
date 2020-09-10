@@ -75,7 +75,7 @@ class Now
 
 
         if (!empty($message['image'])) {
-            $img = curl_file_create(DIR_FILE . $message['image'], 'image/jpeg');
+            $img = curl_file_create($_ENV['DIR_FILE'] . $message['image'], 'image/jpeg');
             $this->telegram->sendPhoto(
                 [
                     'chat_id' => $this->chat_id,

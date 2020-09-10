@@ -4,6 +4,7 @@ namespace msb\core;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Telegram;
 
 class ActionTest extends TestCase
 {
@@ -52,7 +53,7 @@ class ActionTest extends TestCase
 
             $mock_telegram->expects($this->once())
                 ->method('ChatID')
-                ->willReturn(TELEGRAM_TEST_CHAT_ID);
+                ->willReturn($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
             $action->execute($mock_telegram);
         } catch (Exception $e) {

@@ -22,7 +22,8 @@
     "robmorgan/phinx": "^0.12.3",
     "sentry/sdk": "^3.0@beta",
     "sentry/sentry": "^3.0@beta",
-    "php-http/curl-client": "^2.1"
+    "php-http/curl-client": "^2.1",
+    "vlucas/phpdotenv": "^5.1"
   },
   "autoload": {
     "psr-4": {
@@ -31,8 +32,8 @@
       "msb\\command\\": "command"
     },
     "files": [
+      "config.php",
       "app/helper.php",
-      "app/config.php",
       "app/error.php",
       "app/metric.php"
     ]

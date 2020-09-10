@@ -17,7 +17,7 @@ while ($minute == gmdate("i")) {
     sleep(1);
 
     // для дев окружения крутим бесконечно
-    if (OC_ENV_DEV) {
+    if (isset($_ENV['OC_ENV_DEV'])) {
         $minute = gmdate("i");
     }
 }

@@ -9,6 +9,11 @@
  */
 function ya_metric($id, $command)
 {
+    //if not, we do not send metric
+    if (empty($_ENV['YANDEX_METRIC_ID'])) {
+        return;
+    }
+
     $context = stream_context_create(
         [
             'http' => [
@@ -31,7 +36,7 @@ function ya_metric($id, $command)
         $command = substr($command, 0, $str_pos);
     }
 
-    $url = 'https://mc.yandex.ru/watch/' . YANDEX_METRIC_ID;
+    $url = 'https://mc.yandex.ru/watch/' . $_ENV['YANDEX_METRIC_ID'];
     $params = [
         'wmode' => 7,
         'page-ref' => $id,

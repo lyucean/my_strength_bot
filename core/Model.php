@@ -13,7 +13,7 @@ class Model
     public function __construct()
     {
         $this->telegram = new Telegram(
-            TELEGRAM_TOKEN,
+            $_ENV['TELEGRAM_TOKEN'],
             true,
             //            [
             //                'type' => PROXY_TYPE,

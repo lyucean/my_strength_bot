@@ -22,10 +22,10 @@ class CatalogTest extends TestCase
 
         $mock_telegram->expects($this->any())
             ->method('ChatID')
-            ->willReturn(TELEGRAM_TEST_CHAT_ID);
+            ->willReturn($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
         try {
-            $messages = $db->getMessages(TELEGRAM_TEST_CHAT_ID);
+            $messages = $db->getMessages($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
             $catalog = new Catalog($mock_telegram);
             $catalog->preparation($messages);

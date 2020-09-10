@@ -77,7 +77,7 @@ class Setting
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => 'Введи количество сообщений, которое мне отправлять каждый день [максимум ' . MAXIMUM_OF_MESSAGES_PER_DAY . '].'
+                'text' => 'Введи количество сообщений, которое мне отправлять каждый день [максимум ' . $_ENV['MAX_OF_MESSAGES_PER_DAY'] . '].'
             ]
         );
     }
@@ -86,9 +86,9 @@ class Setting
     {
         $quantity = (int)$this->telegram->Text();
 
-        if ($quantity < 1 || MAXIMUM_OF_MESSAGES_PER_DAY < $quantity) {
+        if ($quantity < 1 || $_ENV['MAX_OF_MESSAGES_PER_DAY'] < $quantity) {
             (new Error($this->telegram))->send(
-                'Я ожидаю цифру от 1 до ' . MAXIMUM_OF_MESSAGES_PER_DAY,
+                'Я ожидаю цифру от 1 до ' . $_ENV['MAX_OF_MESSAGES_PER_DAY'],
                 false
             );
             // return the command on hold;

@@ -3,9 +3,9 @@
 namespace msb\command;
 
 use Exception;
+use msb\core\DB;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use msb\core\DB;
 use Telegram;
 
 class SettingTest extends TestCase
@@ -41,7 +41,7 @@ class SettingTest extends TestCase
 
     public function testSet_number()
     {
-        $number = rand(1, MAXIMUM_OF_MESSAGES_PER_DAY);
+        $number = rand(1, $_ENV['MAX_OF_MESSAGES_PER_DAY']);
         $this->mock_telegram->expects($this->any())
             ->method('Text')
             ->willReturn($number);
@@ -53,10 +53,10 @@ class SettingTest extends TestCase
             $this->fail($e);
         }
 
-        $schedule = $this->db->getSchedule(TELEGRAM_TEST_CHAT_ID);
+        $schedule = $this->db->getSchedule($_ENV['TELEGRAM_TEST_CHAT_ID']);
         $this->assertSame($number, $schedule['quantity']);
 
-        $this->db->setSchedule(TELEGRAM_TEST_CHAT_ID, ['quantity' => 1]);
+        $this->db->setSchedule($_ENV['TELEGRAM_TEST_CHAT_ID'], ['quantity' => 1]);
     }
 
     public function testChange_time_zone()
@@ -87,10 +87,10 @@ class SettingTest extends TestCase
             $this->fail($e);
         }
 
-        $schedule = $this->db->getSchedule(TELEGRAM_TEST_CHAT_ID);
+        $schedule = $this->db->getSchedule($_ENV['TELEGRAM_TEST_CHAT_ID']);
         $this->assertSame($offset, $schedule['time_zone_offset']);
 
-        $this->db->setSchedule(TELEGRAM_TEST_CHAT_ID, ['time_zone_offset' => 3]);
+        $this->db->setSchedule($_ENV['TELEGRAM_TEST_CHAT_ID'], ['time_zone_offset' => 3]);
     }
 
     public function testChange_interval()
@@ -155,12 +155,12 @@ class SettingTest extends TestCase
             $this->fail($e);
         }
 
-        $schedule = $this->db->getSchedule(TELEGRAM_TEST_CHAT_ID);
+        $schedule = $this->db->getSchedule($_ENV['TELEGRAM_TEST_CHAT_ID']);
         $this->assertSame($hour_start, $schedule['hour_start']);
         $this->assertSame($hour_end, $schedule['hour_end']);
 
         $this->db->setSchedule(
-            TELEGRAM_TEST_CHAT_ID,
+            $_ENV['TELEGRAM_TEST_CHAT_ID'],
             [
                 'hour_start' => 9,
                 'hour_end' => 13,
@@ -177,7 +177,7 @@ class SettingTest extends TestCase
 
         $this->mock_telegram->expects($this->any())
             ->method('ChatID')
-            ->willReturn(TELEGRAM_TEST_CHAT_ID);
+            ->willReturn($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
         $this->db = new DB();
     }

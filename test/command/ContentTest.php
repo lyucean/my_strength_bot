@@ -65,7 +65,7 @@ class MessageTest extends TestCase
 
         $this->mock_telegram->expects($this->any())
             ->method('ChatID')
-            ->willReturn(TELEGRAM_TEST_CHAT_ID);
+            ->willReturn($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
         $this->mock_telegram->expects($this->any())
             ->method('MessageID')

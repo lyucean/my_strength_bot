@@ -33,7 +33,7 @@ class Processing extends Model
             $chat_id = $this->telegram->ChatID();
 
             // для дев окружения всегда выкидываем ответ в консоль
-            if (OC_ENV_DEV) {
+            if (isset($_ENV['OC_ENV_DEV'])) {
                 echo ddf($text, false);
             }
 

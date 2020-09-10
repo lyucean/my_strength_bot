@@ -63,15 +63,18 @@ class Message
         $file_path = $file['result']['file_path'];
         $file_name = $file['result']['file_unique_id'] . '.jpg';
 
-        $url_on_server = 'https://api.telegram.org/file/bot' . TELEGRAM_TOKEN . '/' . $file_path;
+        $url_on_server = 'https://api.telegram.org/file/bot' . $_ENV['TELEGRAM_TOKEN'] . '/' . $file_path;
 
         $folder = rand(10, 999) . '/';
 
-        if (!is_dir(DIR_FILE . $folder)) {
-            mkdir(DIR_FILE . $folder);
+        if (!is_dir($_ENV['DIR_FILE'] . $folder)) {
+            mkdir($_ENV['DIR_FILE'] . $folder);
         }
 
-        file_put_contents(DIR_FILE . $folder . $file_name, file_get_contents($url_on_server));
+        file_put_contents(
+            $_ENV['DIR_FILE'] . $folder . $file_name,
+            file_get_contents($url_on_server)
+        );
 
         $this->message_id = $this->telegram->MessageID();
 

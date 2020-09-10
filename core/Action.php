@@ -37,7 +37,7 @@ class Action
             (new Error($registry))->send('Я не нашла такую команду');
         }
 
-        $file = DIR_COMMAND . $this->route . '.php';
+        $file = $_ENV['DIR_COMMAND'] . $this->route . '.php';
         $class = preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
 
         // Initialize the class

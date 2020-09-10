@@ -19,7 +19,7 @@ class StartTest extends TestCase
 
             $Telegram->expects($this->once())
                 ->method('ChatID')
-                ->willReturn(TELEGRAM_TEST_CHAT_ID);
+                ->willReturn($_ENV['TELEGRAM_TEST_CHAT_ID']);
 
             $action = new Start($Telegram);
 
