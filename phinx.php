@@ -6,7 +6,7 @@ return
         'migrations' => '%%PHINX_CONFIG_DIR%%/migrations',
     ],
     'environments' => [
-        'default_migration_table' => 'phinx_log',
+        'default_migration_table' => $_ENV['DB_NAME_PHINX_LOG'],
         'default_environment' => 'development',
         'production' => [
             'adapter' => 'mysql',
