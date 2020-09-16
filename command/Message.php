@@ -34,6 +34,20 @@ class Message
             $text = $this->telegram->Caption();
         }
 
+        if (!$this->db->existCheckMessage(
+            [
+                'message_id' => $this->telegram->MessageID(),
+                'chat_id' => $this->chat_id,
+            ]
+        )) {
+            (new Error($this->telegram))->send(
+                'Сообщение уже удалено или не существует 🤚',
+                false
+            );
+            return;
+        }
+
+
         $this->db->editMessageByMessageId(
             [
                 'chat_id' => $this->chat_id,

@@ -37,12 +37,6 @@ class Processing extends Model
                 echo ddf($text, false);
             }
 
-            // If this is editing, just edit the message
-            if ($this->telegram->getUpdateType() == 'edited_message') {
-                (new Message($this->telegram))->edit();
-                continue;
-            }
-
             // Tracking activity
             $this->db->addChatHistory(
                 [
@@ -55,6 +49,7 @@ class Processing extends Model
             );
 
             // If it's an independent command, it has the highest priority.
+            // Necessarily, the very first
             if (mb_substr($text, 0, 1, 'UTF-8') == '/') {
                 // Clear command_waiting
                 $this->db->cleanWaitingCommand($chat_id);
@@ -70,6 +65,12 @@ class Processing extends Model
                 $action->execute($this->telegram);
 
                 ya_metric($chat_id, $text);
+                continue;
+            }
+
+            // If this is editing, just edit the message
+            if ($this->telegram->getUpdateType() == 'edited_message') {
+                (new Message($this->telegram))->edit();
                 continue;
             }
 

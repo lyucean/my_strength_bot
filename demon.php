@@ -15,11 +15,6 @@ while ($minute == gmdate("i")) {
     echo PHP_EOL . gmdate("i:s");
     $processing->check();
     sleep(1);
-
-    // для дев окружения крутим бесконечно
-    if ($_ENV['OC_ENV_DEV']) {
-        $minute = gmdate("i");
-    }
 }
 
 // Let's create a mailing list for the day.
