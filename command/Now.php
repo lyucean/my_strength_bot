@@ -47,7 +47,7 @@ class Now
             (new Error($this->telegram))->send('Я не нашла это сообщение 🕵🏻‍♀️');
         }
 
-        $message = $this->db->getMessage($message_id);
+        $message = $this->db->getMessage(['message_id' => $message_id]);
 
         if (empty($message)) { // If there is nothing to send
             $this->telegram->sendMessage(

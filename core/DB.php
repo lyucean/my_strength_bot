@@ -148,13 +148,18 @@ class DB
     }
 
     /**
-     * @param $message_id
+     * @param array $filter
      * @return array
      * @throws Exception
      */
-    public function getMessage($message_id)
+    public function getMessage(array $filter = [])
     {
-        $this->db->where("message_id", (int)$message_id);
+        if (isset($filter['message_id'])) {
+            $this->db->where("message_id", (int)$filter['message_id']);
+        }
+        if (isset($filter['text'])) {
+            $this->db->where("text", $this->db->escape(trim($filter['text'])));
+        }
         return $this->db->getOne("message");
     }
 
@@ -163,7 +168,7 @@ class DB
      * @return array
      * @throws Exception
      */
-    public function getLastMessage($chat_id)
+    public function getLastMessage(int $chat_id)
     {
         $this->db->where("chat_id", $chat_id);
         $this->db->orderBy("date_reminder", "DESC");

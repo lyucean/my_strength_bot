@@ -136,10 +136,12 @@ class Message
                 'text' => $this->telegram->Text(),
             ]
         )) {
+            $message = $this->db->getMessage(['text' => $this->telegram->Text()]);
+
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'Это сообщение уже существует 👮🏻‍♀️'
+                    'text' => 'Это сообщение уже существует /_' . $message['message_id'] . ' 👮🏻‍♀️ ' . ''
                 ]
             );
             return;
