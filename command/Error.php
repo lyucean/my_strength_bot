@@ -17,7 +17,7 @@ class Error
         $this->chat_id = $this->telegram->ChatID();
     }
 
-    public function send($message, $throw = true)
+    public function send($message, $throw = false)
     {
         $this->telegram->sendMessage(
             [

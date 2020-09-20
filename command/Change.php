@@ -24,10 +24,7 @@ class Change
     {
         // available only if messages exist
         if (empty($this->db->getMessages($this->chat_id))) {
-            (new Error($this->telegram))->send(
-                'У вас пока нет сообщений и мне нечего менять',
-                false
-            );
+            (new Error($this->telegram))->send('У вас пока нет сообщений и мне нечего менять.');
             return;
         }
 
@@ -85,7 +82,7 @@ class Change
         $message_id = $this->telegram->Text();
 
         if (!is_numeric($message_id)) {
-            (new Error($this->telegram))->send('Я ожидаю число и оно должно быть больше 0', false);
+            (new Error($this->telegram))->send('Я ожидаю число и оно должно быть больше 0.');
             // return the command on hold;
             $this->db->setWaitingCommand($this->chat_id, '/change/delete');
             return;
@@ -98,8 +95,7 @@ class Change
             ]
         )) {
             (new Error($this->telegram))->send(
-                'Сообщение /_' . $message_id . ' уже удалено или не существует 🤚',
-                false
+                'Сообщение /_' . $message_id . ' уже удалено или не существует.'
             );
             return;
         }
@@ -124,7 +120,7 @@ class Change
         $m_last = $this->db->getLastMessage($this->chat_id);
 
         if (empty($m_last)) {
-            (new Error($this->telegram))->send('Нет сообщений 🤚', false);
+            (new Error($this->telegram))->send('Нет сообщений.');
         }
 
         $this->db->editMessageByMessageId(

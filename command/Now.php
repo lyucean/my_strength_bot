@@ -44,16 +44,17 @@ class Now
     public function get($message_id)
     {
         if (empty($message_id)) {
-            (new Error($this->telegram))->send('Я не нашла это сообщение 🕵🏻‍♀️');
+            (new Error($this->telegram))->send('Я не нашла это сообщение.');
         }
 
         $message = $this->db->getMessage(['message_id' => $message_id]);
 
         if (empty($message)) { // If there is nothing to send
+            (new Error($this->telegram))->send('Такое сообщение не найдено.');
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => "Такое сообщение не найдено 🕵🏻‍♀️"
+                    'text' => "Такое сообщение не найдено."
                 ]
             );
             return;

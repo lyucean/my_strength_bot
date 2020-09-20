@@ -88,8 +88,7 @@ class Setting
 
         if ($quantity < 1 || $_ENV['MAX_OF_MESSAGES_PER_DAY'] < $quantity) {
             (new Error($this->telegram))->send(
-                'Я ожидаю цифру от 1 до ' . $_ENV['MAX_OF_MESSAGES_PER_DAY'],
-                false
+                'Я ожидаю цифру от 1 до ' . $_ENV['MAX_OF_MESSAGES_PER_DAY']
             );
             // return the command on hold;
             $this->db->setWaitingCommand($this->chat_id, '/setting/set_number');
@@ -125,10 +124,7 @@ class Setting
         $offset = (int)$this->telegram->Text();
 
         if ($offset < -13 || 14 < $offset) {
-            (new Error($this->telegram))->send(
-                'Я жду число от -12 до 14',
-                false
-            );
+            (new Error($this->telegram))->send('Я жду число от -12 до 14.');
             // return the command on hold;
             $this->db->setWaitingCommand($this->chat_id, '/setting/set_number');
             return;
@@ -180,7 +176,7 @@ class Setting
         $hour_end = (int)ltrim(stristr($interval, '-'), " -");
 
         if (!$this->validate_interval($hour_start, $hour_end)) {
-            (new Error($this->telegram))->send(implode("\n", $this->error), false);
+            (new Error($this->telegram))->send(implode("\n", $this->error));
             // return the command on hold;
             $this->db->setWaitingCommand($this->chat_id, '/setting/set_interval');
             return;
