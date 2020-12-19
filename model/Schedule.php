@@ -31,7 +31,7 @@ class Schedule extends Model
                     [
                         'chat_id' => $item['chat_id'],
                         'photo' => $img,
-                        'caption' => $answer
+                        'caption' => fix_breaks($answer)
                     ]
                 );
                 return;
@@ -41,8 +41,7 @@ class Schedule extends Model
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $item['chat_id'],
-                    'text' => nl2br($answer),
-                    'parse_mode' => 'html'
+                    'text' => fix_breaks($answer),
                 ]
             );
 

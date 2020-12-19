@@ -87,10 +87,11 @@ class Now
             return;
         }
 
+
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => $answer
+                'text' => fix_breaks($answer),
             ]
         );
     }

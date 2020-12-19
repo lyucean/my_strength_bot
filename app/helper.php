@@ -72,7 +72,7 @@ if (!function_exists('shorten_text')) {
      * @param int $max_line_length
      * @return string|string[]
      */
-    function shorten_text(string $text, int $max_line_length = MAX_LINE_LENGTH)
+    function shorten_text(string $text, int $max_line_length = 10)
     {
         // cut www.
         $text = str_replace("www.", "", $text);
@@ -86,6 +86,18 @@ if (!function_exists('shorten_text')) {
         }
 
         return $text;
+    }
+}
+
+// fixes line breaks
+if (!function_exists('fix_breaks')) {
+    /**
+     * @param string $text
+     * @return string
+     */
+    function fix_breaks(string $text) : string
+    {
+        return str_replace( '\n', "\n", $text );
     }
 }
 
