@@ -41,7 +41,8 @@ class Schedule extends Model
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $item['chat_id'],
-                    'text' => $answer
+                    'text' => nl2br($answer),
+                    'parse_mode' => 'html'
                 ]
             );
 
