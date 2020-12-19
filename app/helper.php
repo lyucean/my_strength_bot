@@ -49,7 +49,7 @@ if (!function_exists('shorten_line')) {
             return shorten_link($text);
         }
 
-        return shorten_text($text);
+        return shorten_text($text, $_ENV['MAX_LINE_LENGTH']);
     }
 }
 
@@ -135,7 +135,7 @@ if (!function_exists('shorten_link')) {
                             $link = $match[2] ?: $match[3];
                             return '<' . array_push(
                                 $links,
-                                "<a href=\"$protocol://$link\">" . shorten_text($link) . "</a>"
+                                "<a href=\"$protocol://$link\">" . shorten_text($link, $_ENV['MAX_LINE_LENGTH']) . "</a>"
                             ) . '>';
                         },
                         $value
@@ -149,7 +149,7 @@ if (!function_exists('shorten_link')) {
                                 $links,
                                 "<a href=\"mailto:{$match[1]}\">" . shorten_text(
                                     $match[1]
-                                ) . "</a>"
+                                , $_ENV['MAX_LINE_LENGTH']) . "</a>"
                             ) . '>';
                         },
                         $value
@@ -163,7 +163,7 @@ if (!function_exists('shorten_link')) {
                                 $links,
                                 "<a href=\"$protocol://{$match[1]}\">" . shorten_text(
                                     $match[1]
-                                ) . "</a>"
+                                , $_ENV['MAX_LINE_LENGTH']) . "</a>"
                             ) . '>';
                         },
                         $value
