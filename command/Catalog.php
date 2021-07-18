@@ -40,7 +40,7 @@ class Catalog
                 'chat_id' => $this->chat_id,
                 'text' => $message,
                 'disable_web_page_preview' => true,
-                'parse_mode' => 'html'
+//                'parse_mode' => 'html'
             ]
         );
     }
