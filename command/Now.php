@@ -33,7 +33,7 @@ class Now
             $this->telegram->sendMessage(
                 [
                     'chat_id' => $this->chat_id,
-                    'text' => 'Ваш список сообщений пуст.' . "\n" . 'У меня нет ничего для отправки 🤷🏻'
+                    'text' => 'Ваш список сообщений пуст.' . PHP_EOL . 'У меня нет ничего для отправки 🤷🏻'
                 ]
             );
             return;
@@ -73,6 +73,7 @@ class Now
 
         $answer .= $message['text'] . PHP_EOL;
         $answer .= ' /_' . $message['message_id'];
+        $answer .= '  ||  ' . $_ENV['BOT_NAME'];
 
 
         if (!empty($message['image'])) {
