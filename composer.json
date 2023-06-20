@@ -1,53 +1,56 @@
 {
-  "name": "lyucean/my_strength_bot",
-  "description": "The bot that makes you stronger",
-  "type": "library",
-  "authors": [
-    {
-      "name": "lyucean",
-      "email": "lyucean@gmail.com"
-    }
-  ],
-  "license": "MIT",
-  "minimum-stability": "alpha",
-  "require": {
-    "php": "^7.4",
-    "ext-json": "*",
-    "ext-curl": "*",
-    "thingengineer/mysqli-database-class": "dev-master",
-    "ext-mbstring": "*",
-    "airbrake/phpbrake": "^0.7.3",
-    "lyucean/telegram_bot_php": "dev-forked",
-    "ext-iconv": "*",
-    "robmorgan/phinx": "^0.12.3",
-    "sentry/sdk": "^3.0@beta",
-    "sentry/sentry": "^3.0@beta",
-    "php-http/curl-client": "^2.1",
-    "vlucas/phpdotenv": "^5.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "msb\\model\\": "model",
-      "msb\\core\\": "core",
-      "msb\\command\\": "command"
+    "name": "lyucean/my_strength_bot",
+    "description": "The bot that makes you stronger",
+    "type": "library",
+    "authors": [
+        {
+            "name": "lyucean",
+            "email": "lyucean@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "minimum-stability": "alpha",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "thingengineer/mysqli-database-class": "dev-master",
+        "ext-mbstring": "*",
+        "airbrake/phpbrake": "^0.7.3",
+        "lyucean/telegram_bot_php": "dev-forked",
+        "ext-iconv": "*",
+        "robmorgan/phinx": "^0.12.3",
+        "sentry/sdk": "^3.0@beta",
+        "sentry/sentry": "^3.0@beta",
+        "php-http/curl-client": "^2.1",
+        "vlucas/phpdotenv": "^5.1"
     },
-    "files": [
-      "config.php",
-      "app/helper.php",
-      "app/error.php",
-      "app/metric.php"
-    ]
-  },
-  "config": {
-    "optimize-autoloader": true
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.0"
-  },
-  "repositories": {
-    "lyucean": {
-      "type": "vcs",
-      "url": "https://github.com/lyucean/telegram_bot_php"
+    "autoload": {
+        "psr-4": {
+            "msb\\model\\": "model",
+            "msb\\core\\": "core",
+            "msb\\command\\": "command"
+        },
+        "files": [
+            "config.php",
+            "app/helper.php",
+            "app/error.php",
+            "app/metric.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "repositories": {
+        "lyucean": {
+            "type": "vcs",
+            "url": "https://github.com/lyucean/telegram_bot_php"
+        }
     }
-  }
 }

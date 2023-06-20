@@ -24,7 +24,6 @@ $dotenv->required('DB_PASSWORD');
 $dotenv->required('DB_NAME');
 $dotenv->required('DB_PORT');
 $dotenv->required('DB_CHARSET');
-$dotenv->required('DB_NAME_PHINX_LOG');
 
 $dotenv->required('MAX_OF_MESSAGES_PER_DAY');
 $dotenv->required('MAX_LINE_LENGTH');

@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  php-cli:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    depends_on:
+      - composer
+
+  composer:
+    image: composer
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: install
+
+  mysql:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    hostname: mysql  # имя хоста
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=${PMA_HOST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - mysql
+    profiles:
+      - debug
